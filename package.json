@@ -1,0 +1,24 @@
+{
+  "name": "@stormgle/userdb-test-helper",
+  "version": "1.0.0",
+  "description": "tester helper to init user db with table and data",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/duongtdn/userdb-test-helper.git"
+  },
+  "author": "duongtdn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/duongtdn/userdb-test-helper/issues"
+  },
+  "homepage": "https://github.com/duongtdn/userdb-test-helper#readme",
+  "dependencies": {
+    "@stormgle/userdb-dynamodb-driver": "^1.0.3",
+    "database-abstractor": "^1.0.0",
+    "jsonwebtoken": "^8.3.0"
+  }
+}
