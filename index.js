@@ -58,14 +58,15 @@ module.exports = {
       throw new Error('host and port of database must be define.')
     }
     if (this._tables) {
-      if (this._tables.length === 0) {
+      if (this._tables.indexOf('USERS') === -1) {
         console.log('Initializing USER Table...')
         return this.new(() => {
           console.log('USER Table is created and ready to use.');
           done && done();
         });
       } else {
-        return this._getUsersFromDB(done);
+        console.log('USERS Collection already exists')
+        return this;
       }
     } else {
       this.queue.push({name: 'init', args: [done]})
@@ -183,18 +184,6 @@ module.exports = {
     ]).then(values => {
       console.log('Created users.')
       done && done();
-    })
-    return this;
-  },
-
-  _getUsersFromDB(done) {
-    console.log('Retrieving users...')
-    const users = ['super', 'admin', 'tester'];
-    users.forEach(username => {
-      userdb.queryUser({username}, (err, user) => {
-        this._users[username] = user;
-        done();
-      })
     })
     return this;
   },
