@@ -184,7 +184,10 @@ module.exports = {
     ]).then(values => {
       console.log('Created users.')
       done && done();
-    })
+    }).catch(function(err) {
+      console.log(err);
+      done && done(err);
+    });
     return this;
   },
 
