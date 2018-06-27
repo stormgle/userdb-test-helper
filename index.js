@@ -65,7 +65,8 @@ module.exports = {
           done && done();
         });
       } else {
-        console.log('USERS Collection already exists')
+        console.log('USERS Collection already exists');
+        done && done();
         return this;
       }
     } else {
