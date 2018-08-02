@@ -180,7 +180,8 @@ module.exports = {
         login: { password: '123'},
         roles: ['user'],
         uid: 'tester-uid',
-        profile: { email: ['tester@team.com']}
+        profile: { email: ['tester@team.com']},
+        promote: { course: {'emb-01' : 50000 }}
       })      
     ]).then(values => {
       console.log('Created users.')
