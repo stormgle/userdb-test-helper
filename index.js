@@ -180,7 +180,7 @@ module.exports = {
         login: { password: '123'},
         roles: ['user'],
         uid: 'tester-uid',
-        profile: { email: ['tester@team.com']},
+        profile: { email: ['tester@team.com'], fullName: 'Awesome Tester', phone: ['097 111 1111'], address: 'Team Test, Prod. Department, Organization'},
         promote: { course: {'emb-01' : 50000 }}
       })      
     ]).then(values => {
