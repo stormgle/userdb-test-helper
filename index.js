@@ -12,10 +12,6 @@ const keys = {
   super: process.env.AUTH_KEY_SUPER
 };
 
-const db = {
-  host: null,
-  port: null
-}
 
 module.exports = {
 
@@ -27,18 +23,13 @@ module.exports = {
 
   queue: [],
 
-  use({host, port}) {
-    db.host = host;
-    db.port = port;
+  use({region, endpoint}) {
 
     userdb.use(require('@stormgle/userdb-dynamodb-driver')(
-      {
-        region : 'us-west-2', 
-        endpoint : `${db.host}:${db.port}`
-      },
+      { region, endpoint },
       (err, data) => {
         if (err) {
-          console.log('Failed to init local db')
+          console.log('Failed to access database')
           throw new Error(err)
         } else {
           this._dbready = true;
@@ -54,9 +45,6 @@ module.exports = {
   },
 
   init(done) {
-    if (!db.host && !db.port) {
-      throw new Error('host and port of database must be define.')
-    }
     if (this._tables) {
       if (this._tables.indexOf('USERS') === -1) {
         console.log('Initializing USER Table...')
@@ -75,9 +63,6 @@ module.exports = {
   },
 
   new(done) {
-    if (!db.host && !db.port) {
-      throw new Error('host and port of database must be define.')
-    }
     if (this._dbready) {
       userdb.createTable((err, data) => {
         if (err) {
@@ -94,9 +79,6 @@ module.exports = {
   },
 
   reset () {
-    if (!db.host && !db.port) {
-      throw new Error('host and port of database must be define.')
-    }
     const self = this;
     if (this._dbready) {
       userdb.dropTable(function(err, data) {
@@ -117,6 +99,15 @@ module.exports = {
       })
     } else {
       this.queue.push({name: 'reset', args: [done]})
+    }
+    return this;
+  },
+
+  createUsers(done) {
+    if (this._dbready && this._tables && this._tables.indexOf('USERS') !== -1) {
+      this._createUsers(done);
+    } else {
+      this.queue.push({name: 'createUsers', args: [done]})
     }
     return this;
   },
